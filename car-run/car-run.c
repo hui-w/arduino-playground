@@ -3,28 +3,32 @@
  * Go forward, go backward, turn left and turn right
  */
 
+const int MOTOR_LEFT = 0;
+const int MOTOR_RIGHT = 1;
+const int BACKWARD = -1;
+const int BREAK = 0;
+const int FORWARD = 1;
+
 /*
  * 9 - Left motor backward (IN1)
  * 5 - Left motor forward (IN2)
  * 6 - Right motor forward (IN3)
  * 10 - Right motor backward (IN4)
  */
-int pins[2][2] = {
-  { 5, 9 },
-  { 6, 10 }
-};
+const int DIGITAL_PINS[2][2] = { { 5, 9 }, { 6, 10 }};
 
 /*
  * Drive the motor
  *
- * motorIndex  >>                0: left;    1: right
- * driveMode   >>  -1: backward; 0: break;   1: forward
+ * motorIndex  >>                 0: left;    1: right
+ * driveMode   >>  -1: backward;  0: break;   1: forward
  */
 void driveMotor(int motorIndex, int driveMode) {
-  int pinForward = pins[motorIndex][0];
-  int pinBackward = pins[motorIndex][1];
+  int pinForward = DIGITAL_PINS[motorIndex][0];
+  int pinBackward = DIGITAL_PINS[motorIndex][1];
 
-  if (driveMode == -1) {
+  switch (driveMode) {
+  case BACKWARD:
     // Backward
     digitalWrite(pinForward, LOW);
     digitalWrite(pinBackward, HIGH);
@@ -35,18 +39,23 @@ void driveMotor(int motorIndex, int driveMode) {
      */
     analogWrite(pinForward, 0);
     analogWrite(pinBackward, 200);
-  } else if (driveMode == 0) {
+    break;
+  case BREAK:
     // Break
     digitalWrite(pinForward, LOW);
     digitalWrite(pinBackward, LOW);
     analogWrite(pinForward, 0);
     analogWrite(pinBackward, 0);
-  } else if (driveMode == 1) {
+    break;
+  case FORWARD:
     // Forward
     digitalWrite(pinForward, HIGH);
     digitalWrite(pinBackward, LOW);
     analogWrite(pinForward, 200);
     analogWrite(pinBackward, 0);
+    break;
+  default:
+    break;
   }
 }
 
@@ -58,8 +67,8 @@ void driveMotor(int motorIndex, int driveMode) {
  * time       >>  seconds
  */
 void driveCar(int leftMode, int rightMode, int time) {
-  driveMotor(0, leftMode);
-  driveMotor(0, rightMode);
+  driveMotor(MOTOR_LEFT, leftMode);
+  driveMotor(MOTOR_RIGHT, rightMode);
   delay(time * 1000);
 }
 
@@ -71,7 +80,7 @@ void setup() {
    */
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 2; j++) {
-      pinMode(pins[i][j], OUTPUT);
+      pinMode(DIGITAL_PINS[i][j], OUTPUT);
     }
   }
 }
@@ -80,19 +89,19 @@ void loop() {
   // Freeze for 2 seconds before starting
   delay(2000);
 
-  // Go forward
-  driveCar(-1, -1, 0.5);
+  // Go backward
+  driveCar(BACKWARD, BACKWARD, 0.5);
 
   // Go forward
-  driveCar(1, 1, 0.5);
+  driveCar(FORWARD, FORWARD, 0.5);
 
   // Turn left; Turn right; Break
-  driveCar(0, 1, 1);
-  driveCar(1, 0, 1);
-  driveCar(0, 0, 1);
+  driveCar(BREAK, FORWARD, 1);
+  driveCar(FORWARD, BREAK, 1);
+  driveCar(BREAK, BREAK, 1);
 
   // Spin right; Spin left; Break
-  driveCar(1, -1, 2);
-  driveCar(-1, 1, 2);
-  driveCar(0, 0, 1);
+  driveCar(FORWARD, BACKWARD, 2);
+  driveCar(BACKWARD, FORWARD, 2);
+  driveCar(BREAK, BREAK, 1);
 }
