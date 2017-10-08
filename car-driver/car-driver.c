@@ -101,7 +101,6 @@ void loop() {
   driveCar(BREAK, FORWARD, 10);
   driveCar(FORWARD, BREAK, 10);
   driveCar(BREAK, BREAK, 10);
-  driveCar(BREAK, BREAK, 10);
 
   // Spin right; Spin left; Break
   driveCar(FORWARD, BACKWARD, 20);
