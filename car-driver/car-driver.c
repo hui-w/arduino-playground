@@ -90,18 +90,21 @@ void loop() {
   delay(2000);
 
   // Go backward
-  driveCar(BACKWARD, BACKWARD, 0.5);
+  driveCar(BACKWARD, BACKWARD, 5);
+  driveCar(BREAK, BREAK, 10);
 
   // Go forward
-  driveCar(FORWARD, FORWARD, 0.5);
+  driveCar(FORWARD, FORWARD, 5);
+  driveCar(BREAK, BREAK, 10);
 
   // Turn left; Turn right; Break
-  driveCar(BREAK, FORWARD, 1);
-  driveCar(FORWARD, BREAK, 1);
-  driveCar(BREAK, BREAK, 1);
+  driveCar(BREAK, FORWARD, 10);
+  driveCar(FORWARD, BREAK, 10);
+  driveCar(BREAK, BREAK, 10);
+  driveCar(BREAK, BREAK, 10);
 
   // Spin right; Spin left; Break
-  driveCar(FORWARD, BACKWARD, 2);
-  driveCar(BACKWARD, FORWARD, 2);
-  driveCar(BREAK, BREAK, 1);
+  driveCar(FORWARD, BACKWARD, 20);
+  driveCar(BACKWARD, FORWARD, 20);
+  driveCar(BREAK, BREAK, 10);
 }
