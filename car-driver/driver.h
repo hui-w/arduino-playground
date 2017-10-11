@@ -17,6 +17,10 @@ const int FORWARD = 1;
  */
 const int DIGITAL_PINS[2][2] = { { 5, 9 }, { 6, 10 }};
 
+
+/*
+ * Functions
+ */
 void driveMotor(int motorIndex, int driveMode);
 void driveCar(int leftMode, int rightMode, int time);
 
