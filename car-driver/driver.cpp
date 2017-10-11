@@ -1,3 +1,6 @@
+#include <arduino.h>
+#include "driver.h"
+
 /*
  * Drive the motor
  *
