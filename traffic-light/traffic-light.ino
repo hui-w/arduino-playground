@@ -41,7 +41,7 @@ void countDown(unsigned char start) {
   unsigned char j = start % 10;
   for (unsigned char i = j; i > 0; i--) {
     showDigit(i);
-    delay(1000);
+    delay(500);
   }
 }
 
@@ -57,7 +57,7 @@ void loop() {
     luminateLED(0);
     countDown(9);
     luminateLED(1);
-    countDown(3);
+    countDown(9);
     luminateLED(2);
     countDown(9);
   }
