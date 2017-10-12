@@ -1,5 +1,6 @@
 // Pins for seven-segment display
 /*
+ * const int a = 7;
  * const int b = 6;
  * const int c = 5;
  * const int d = 11;
@@ -19,13 +20,13 @@ const unsigned char DIGITS_ENCODING[10][7] = {
 
 // Show digit
 void showDigit(unsigned char digit) {
-  unsigned char encoding[7] = DIGITS_ENCODING[digit % 10];
+  unsigned char j = digit % 10;
   for (unsigned char i = 0; i < 7; i++) {
-    digitalWrite(SEGMENT_PINS[i], encoding[i] == 1 ? HIGH : LOW);
+    digitalWrite(SEGMENT_PINS[i], DIGITS_ENCODING[j][i] == 1 ? HIGH : LOW);
   }
 
   // Blur the dot
-  digitalWrite(dp, LOW);
+  digitalWrite(SEGMENT_PINS[7], LOW);
 }
 
 void setup() {
