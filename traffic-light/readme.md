@@ -12,4 +12,6 @@ Hexadecimal encodings for displaying the digits 0 to F
 8 8 0×7F  0×7F  on  on  on  on  on  on  on
 9 9 0×6F  0×7B  on  on  on  on  off on  on
 
-When connecting the 7-segment display, use 8 220ohm resisters
+When connecting the 7-segment display, use 8 220ohm resisters.
+When connecting LEDs, use 3 220ohm resisters.
+Connection for LED is just for reference, don't use those PINS as they are for the digit display.

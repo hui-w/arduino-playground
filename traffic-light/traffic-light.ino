@@ -1,14 +1,9 @@
+// Pins for LEDs
+// [RED, YELLOW, GREEN]
+const int LED_PINS[3] = {2, 3, 12};
+
 // Pins for seven-segment display
-/*
- * const int a = 7;
- * const int b = 6;
- * const int c = 5;
- * const int d = 11;
- * const int e = 10;
- * const int f = 8;
- * const int g = 9;
- * const int dp = 4;
-*/
+// [a, b, c, d, e, f, g, dp]
 const int SEGMENT_PINS[8] = {7, 6, 5, 11, 10, 8, 9, 4};
 
 // Digits encoding
@@ -29,6 +24,27 @@ void showDigit(unsigned char digit) {
   digitalWrite(SEGMENT_PINS[7], LOW);
 }
 
+// Luminate LED
+// Set ledIndex = -1 to luminate none LED
+void luminateLED(unsigned char ledIndex) {
+  for (unsigned char i = 0; i < 3; i++) {
+    if (ledIndex == i) {
+      digitalWrite(LED_PINS[i], HIGH);
+    } else {
+      digitalWrite(LED_PINS[i], LOW);
+    }
+  }
+}
+
+// Count down
+void countDown(unsigned char start) {
+  unsigned char j = start % 10;
+  for (unsigned char i = j; i > 0; i--) {
+    showDigit(i);
+    delay(1000);
+  }
+}
+
 void setup() {
   int i;
   for (i = 4; i <= 11; i++) {
@@ -38,25 +54,11 @@ void setup() {
 
 void loop() {
   while (1) {
-    showDigit(0);
-    delay(1000);
-    showDigit(1);
-    delay(1000);
-    showDigit(2);
-    delay(1000);
-    showDigit(3);
-    delay(1000);
-    showDigit(4);
-    delay(1000);
-    showDigit(5);
-    delay(1000);
-    showDigit(6);
-    delay(1000);
-    showDigit(7);
-    delay(1000);
-    showDigit(8);
-    delay(1000);
-    showDigit(9);
-    delay(1000);
+    luminateLED(0);
+    countDown(9);
+    luminateLED(1);
+    countDown(3);
+    luminateLED(2);
+    countDown(9);
   }
 }
