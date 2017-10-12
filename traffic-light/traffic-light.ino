@@ -47,7 +47,7 @@ void countDown(unsigned char start) {
 
 void setup() {
   int i;
-  for (i = 4; i <= 11; i++) {
+  for (i = 2; i <= 12; i++) {
     pinMode(i, OUTPUT);  // Set pin 4-11 as output
   }
 }
