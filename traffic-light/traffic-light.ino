@@ -41,13 +41,13 @@ void countDown(unsigned char start) {
   unsigned char j = start % 10;
   for (unsigned char i = j; i > 0; i--) {
     showDigit(i);
-    delay(1000);
+    delay(500);
   }
 }
 
 void setup() {
   int i;
-  for (i = 4; i <= 11; i++) {
+  for (i = 2; i <= 12; i++) {
     pinMode(i, OUTPUT);  // Set pin 4-11 as output
   }
 }
@@ -57,7 +57,7 @@ void loop() {
     luminateLED(0);
     countDown(9);
     luminateLED(1);
-    countDown(3);
+    countDown(9);
     luminateLED(2);
     countDown(9);
   }
