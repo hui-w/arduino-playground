@@ -105,7 +105,9 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
  
-#define melodyPin 3
+#define melodyPin 12
+#define buttonPin 2
+
 //Mario main theme melody
 int melody[] = {
   NOTE_E7, NOTE_E7, 0, NOTE_E7,
@@ -207,12 +209,18 @@ int underworld_tempo[] = {
  
 void setup(void)
 {
-  pinMode(3, OUTPUT);//buzzer
+  pinMode(buttonPin,INPUT_PULLUP); // Use input pullup
+  pinMode(melodyPin, OUTPUT);//buzzer
   pinMode(13, OUTPUT);//led indicator when singing a note
  
 }
 void loop()
 {
+  int n =digitalRead(2);
+  if (n!=LOW) {
+    return;
+  }
+
   //sing the tunes
   sing(1);
   sing(1);
@@ -285,5 +293,4 @@ void buzz(int targetPin, long frequency, long length) {
     delayMicroseconds(delayValue); // wait again or the calculated delay value
   }
   digitalWrite(13, LOW);
- 
 }
