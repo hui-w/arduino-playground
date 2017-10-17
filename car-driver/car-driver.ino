@@ -11,27 +11,34 @@ void setup() {
       pinMode(DIGITAL_PINS[i][j], OUTPUT);
     }
   }
+
+  // Use input pullup for button pin
+  pinMode(13, OUTPUT);
 }
 
 void loop() {
+  digitalWrite(13, HIGH); 
+
   // Freeze for 2 seconds before starting
   delay(2000);
+  
+  digitalWrite(13, LOW);
 
   // Go backward
-  driveCar(BACKWARD, BACKWARD, 5);
+  driveCar(BACKWARD, BACKWARD, 20);
   driveCar(BREAK, BREAK, 10);
 
   // Go forward
-  driveCar(FORWARD, FORWARD, 5);
+  driveCar(FORWARD, FORWARD, 20);
   driveCar(BREAK, BREAK, 10);
 
   // Turn left; Turn right; Break
-  driveCar(BREAK, FORWARD, 10);
-  driveCar(FORWARD, BREAK, 10);
+  driveCar(BREAK, FORWARD, 40);
+  driveCar(FORWARD, BREAK, 40);
   driveCar(BREAK, BREAK, 10);
 
   // Spin right; Spin left; Break
-  driveCar(FORWARD, BACKWARD, 20);
-  driveCar(BACKWARD, FORWARD, 20);
+  driveCar(FORWARD, BACKWARD, 80);
+  driveCar(BACKWARD, FORWARD, 80);
   driveCar(BREAK, BREAK, 10);
 }

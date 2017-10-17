@@ -21,8 +21,8 @@ void driveMotor(int motorIndex, int driveMode) {
      * PWM: Pulse Width Modulation (0~255)
      * https://www.arduino.cc/en/Tutorial/PWM
      */
-    // analogWrite(pinForward, 0);
-    // analogWrite(pinBackward, 200);
+    analogWrite(pinForward, 0);
+    analogWrite(pinBackward, 170);
     break;
   case BREAK:
     // Break
@@ -35,8 +35,8 @@ void driveMotor(int motorIndex, int driveMode) {
     // Forward
     digitalWrite(pinForward, HIGH);
     digitalWrite(pinBackward, LOW);
-    // analogWrite(pinForward, 200);
-    // analogWrite(pinBackward, 0);
+    analogWrite(pinForward, 170);
+    analogWrite(pinBackward, 0);
     break;
   default:
     break;
@@ -53,6 +53,5 @@ void driveMotor(int motorIndex, int driveMode) {
 void driveCar(int leftMode, int rightMode, int time) {
   driveMotor(MOTOR_LEFT, leftMode);
   driveMotor(MOTOR_RIGHT, rightMode);
-  delay(time * 1000);
+  delay(time * 100);
 }
-
