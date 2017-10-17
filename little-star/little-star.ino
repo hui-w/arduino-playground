@@ -5,6 +5,9 @@ int length = 15; // the number of notes
 char notes[] = "ccggaagffeeddc "; // a space represents a rest
 int beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
 int tempo = 300;
+
+int isPlaying = false;
+int currentNotes = 0;
  
 void playTone(int tone, int duration) {
   for (long i = 0; i < duration * 1000L; i += tone * 2) {
@@ -33,17 +36,32 @@ void setup() {
 }
  
 void loop() {
-  int n =digitalRead(2);
-  if (n==LOW) {
-    for (int i = 0; i < length; i++) {
-      if (notes[i] == ' ') {
-        delay(beats[i] * tempo); // rest
-      } else {
-        playNote(notes[i], beats[i] * tempo);
-      }
-   
-      // pause between notes
-      delay(tempo / 2); 
+  int n = digitalRead(2);
+  if (n == LOW) {
+    isPlaying = !isPlaying;
+
+    // Point to the start if turning off
+    if (!isPlaying) {
+      currentNotes = 0;
+    }
+  }
+
+  if (isPlaying) {
+    // Play the current note
+    if (notes[currentNotes] == ' ') {
+      delay(beats[currentNotes] * tempo); // rest
+    } else {
+      playNote(notes[currentNotes], beats[currentNotes] * tempo);
+    }
+ 
+    // pause between notes
+    delay(tempo / 2); 
+
+    // Next note position
+    if (currentNotes == length - 1) {
+      currentNotes = 0;
+    } else {
+      currentNotes ++;
     }
   }
 }
