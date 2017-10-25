@@ -1,36 +1,36 @@
-#define LED 13
+#define LED_PIN 13
 #define KEY 2
-#define Buzzer 3
-int KEY_NUM=0;
+#define BUZZER_PIN 3
+int keyStatus=0;
 
 void setup() {
-  pinMode(LED, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
   pinMode(KEY, INPUT_PULLUP);
-  pinMode(Buzzer, OUTPUT);
-  digitalWrite(Buzzer, LOW);
+  pinMode(BUZZER_PIN, OUTPUT);
+  digitalWrite(BUZZER_PIN, LOW);
 }
 
 void loop() {
-  ScanKey();
-  if (KEY_NUM == 1) {
-    digitalWrite(LED, !digitalRead(LED));
+  scanKey();
+  if (keyStatus == 1) {
+    digitalWrite(LED_PIN, !digitalRead(LED_PIN));
   }
 }
 
-void ScanKey() {
-  KEY_NUM = 0;
+void scanKey() {
+  keyStatus = 0;
   if (digitalRead(KEY) == LOW) {
-    delay(20);
+    delay(20);	// Delay to avoid inverting
     if (digitalRead(KEY) == LOW) {
-      BuzzerDi();
-      KEY_NUM = 1;
+      buzzerBeep();
+      keyStatus = 1;
       while(digitalRead(KEY) == LOW);
     }
   }
 }
 
-void BuzzerDi() {
-  digitalWrite(Buzzer, HIGH);
+void buzzerBeep() {
+  digitalWrite(BUZZER_PIN, HIGH);
   delay(100);
-  digitalWrite(Buzzer, LOW);
+  digitalWrite(BUZZER_PIN, LOW);
 }
