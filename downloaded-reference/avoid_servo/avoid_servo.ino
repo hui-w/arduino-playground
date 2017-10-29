@@ -247,7 +247,7 @@ void right_detection()
 //===========================================================
 void loop()
 {
-  keysacn();	   //调用按键扫描函数
+  // keysacn();	   //调用按键扫描函数
   while(1)
   {
     front_detection();//测量前方距离
