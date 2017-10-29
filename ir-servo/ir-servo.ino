@@ -1,9 +1,9 @@
 #include <IRremote.h>
 
 // Define the PINs
-const int IR_RECV_PIN = A4;
-const int SERVO_A_PIN = 4;
-const int SERVO_B_PIN = 5;
+const int IR_RECV_PIN = 4;
+const int SERVO_A_PIN = 9;
+const int SERVO_B_PIN = 10;
 
 // Define the remove key codes
 const long REMOTE_KEY_1 = 0x00ff30CF;
@@ -23,11 +23,13 @@ int on = 0;
 unsigned long last = millis();
 
 void setup() {
+  pinMode(SERVO_A_PIN, OUTPUT);
+  pinMode(SERVO_B_PIN, OUTPUT);
   Serial.begin(9600);
   irrecv.enableIRIn();
 }
 
-void loop() {
+void loop() {   
   if (irrecv.decode(&results)) {
 
     // If it's been at least 1/4 second since the last
@@ -40,33 +42,37 @@ void loop() {
 
     switch (results.value) {
       case REMOTE_KEY_1:
-        // Servo A -> 0
+        // Servo B -> 180
         for(int i = 0; i <= 50; i++) {
-          servoPulse(SERVO_A_PIN, 0);
+          servoPulse(SERVO_B_PIN, 160);
         }
         break;
       case REMOTE_KEY_2:
-        
+        for(int i = 0; i <= 50; i++) {
+          servoPulse(SERVO_B_PIN, 90);
+        }
         break;
       case REMOTE_KEY_3:
-        // Servo A -> 180
+        // Servo B -> 0
+        for(int i = 0; i <= 50; i++) {
+          servoPulse(SERVO_B_PIN, 20);
+        }
+        break;
+      case REMOTE_KEY_4:
+        // Servo A -> 0
         for(int i = 0; i <= 50; i++) {
           servoPulse(SERVO_A_PIN, 180);
         }
         break;
-      case REMOTE_KEY_4:
-        // Servo B -> 0
-        for(int i = 0; i <= 50; i++) {
-          servoPulse(SERVO_B_PIN, 0);
-        }
-        break;
       case REMOTE_KEY_5:
-        
+        for(int i = 0; i <= 50; i++) {
+          servoPulse(SERVO_A_PIN, 90);
+        }     
         break;
       case REMOTE_KEY_6:
-        // Servo B -> 180
+        // Servo A -> 180
         for(int i = 0; i <= 50; i++) {
-          servoPulse(SERVO_B_PIN, 180);
+          servoPulse(SERVO_A_PIN, 0);
         }
         break;
       case REMOTE_KEY_7:
@@ -103,5 +109,15 @@ void servoPulse(int pin,int angle)
   // Low
   digitalWrite(pin, LOW);
   delay(20 - pulseWidth / 1000);
+}
+
+int pulsewidth;//定义脉宽变量
+void servoPulse2(int servopin,int myangle)//定义一个脉冲函数
+{
+  pulsewidth=(myangle*11)+500;//将角度转化为500-2480的脉宽值
+  digitalWrite(servopin,HIGH);//将舵机接口电平至高
+  delayMicroseconds(pulsewidth);//延时脉宽值的微秒数
+  digitalWrite(servopin,LOW);//将舵机接口电平至低
+  delay(20-pulsewidth/1000);
 }
 
