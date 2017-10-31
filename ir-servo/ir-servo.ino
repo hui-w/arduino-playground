@@ -1,3 +1,13 @@
+/*
+WIRES  ARDUINO
+RED    5V
+BROWN  GND
+GREEN  4
+ORANGE 10
+YELLOW 9
+*/
+
+
 #include <IRremote.h>
 
 // Define the PINs
