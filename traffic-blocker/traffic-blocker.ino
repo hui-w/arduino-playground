@@ -1,5 +1,8 @@
 #include <Servo.h>
-Servo myservo;
+#define TONE_NOTE 3729
+#define NOTE_DURATION 250
+
+Servo servoInstance;
 int SERVO_PIN = 9;
 int TONE_PIN = 6;
 int RED_LED_PIN = 11;
@@ -11,14 +14,14 @@ int posStart = 70;
 int posEnd = 170;
 int servoSpeed = 10;
 
-int preBlockingBeepCount = 4;
-int blockingBeepCount = 10;
+int preBlockingBeepCount = 2;
+int blockingBeepCount = 6;
 bool isAlarmLedOn = false;
 
 void setup()
 {
-  myservo.attach(SERVO_PIN);
-  myservo.write(posStart);
+  servoInstance.attach(SERVO_PIN);
+  servoInstance.write(posStart);
 
   pinMode(TONE_PIN,OUTPUT);
   pinMode(RED_LED_PIN, OUTPUT);
@@ -33,25 +36,21 @@ void tones(int count, bool beepAtEnd = false)
 {
   for (int i = 0; i < count; i++)
   {
-    tone();
+    playBeep();
     delay(500);
   }
   if (beepAtEnd) {
-    tone();
+    playBeep();
   }
 }
 
-void tone()
+void playBeep()
 {
   digitalWrite(RED_LED_PIN, isAlarmLedOn ? LOW : HIGH);
   isAlarmLedOn = !isAlarmLedOn;
-  for(int i = 0;i < 40; i ++)
-  {
-    digitalWrite(TONE_PIN, HIGH);
-    delay(1);
-    digitalWrite(TONE_PIN, LOW);
-    delay(1);
-  }
+
+  tone(6, TONE_NOTE, NOTE_DURATION);
+  delay(NOTE_DURATION + 30);
 }
 
 void loop()
@@ -70,10 +69,10 @@ void blockTraffic()
     tones(preBlockingBeepCount, true);
     for (int pos = posStart; pos <= posEnd;pos ++)
     {
-      myservo.write(pos);
+      servoInstance.write(pos);
       delay(servoSpeed);
       if (pos - posStart == 50){
-        tone();
+        playBeep();
       }
     }
   
@@ -81,7 +80,7 @@ void blockTraffic()
           
     for (int pos = posEnd; pos >= posStart; pos --)
     {
-      myservo.write(pos);
+      servoInstance.write(pos);
       delay(servoSpeed);
     }
 
